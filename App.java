@@ -67,16 +67,9 @@ public class App {
         localizarCoordenadaNE(mapa, poligono, poligonoAnterior);
         
         
-        Coordenada coordenadaSW = localizarCoordenadaSW(mapa, poligono);
+        localizarCoordenadaSW(mapa, poligono);
 
-        Coordenada coordenadaSE = new Coordenada(coordenadaNE.getX(), coordenadaSW.getY());
-
-
-        poligono = new Poligono(
-                coordenadaNW,
-                coordenadaNE,
-                coordenadaSW,
-                coordenadaSE);
+        poligono.setCoordenadaSE(new Coordenada(poligono.getCoordenadaNE().getX(), poligono.getCoordenadaSW().getY()));
         mapa.getPoligonos().add(poligono);
         System.out.println("Poligono criado: NW(" + poligono.getCoordenadaNW().getX() + "," + poligono.getCoordenadaNW().getY() + ") " +
                 "NE(" + poligono.getCoordenadaNE().getX() + "," + poligono.getCoordenadaNE().getY() + ") " +
@@ -102,8 +95,8 @@ public class App {
                 coordenadaNE = coordenadaMina;
             }
         }
-        poligonoAnterior.setColisaoX(coordenadaNE);
-        return coordenadaNE;
+        poligono.setColisaoX(coordenadaNE);
+        poligono.setCoordenadaNE(coordenadaNE);
     }
 
     public static Coordenada localizarCoordenadaSW(Mapa mapa, Poligono poligonoAnterior) {
