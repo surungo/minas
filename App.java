@@ -44,59 +44,85 @@ public class App {
             mapa.getMinas().add(mina);
         }
 
-        criaPoligonos(mapa, new Coordenada(0, 0));
+        Poligono poligono = new Poligono(new Coordenada(0, 0), new Coordenada(mapa.getW(), 0), new Coordenada(0, mapa.getH()), new Coordenada(mapa.getW(), mapa.getH()));
+        
+        poligono = criaPoligonos(mapa, poligono);
 
-        criaPoligonos(mapa, mapa.getPoligonos().get(0).getCoordenadaNE());
-        criaPoligonos(mapa, mapa.getPoligonos().get(0).getCoordenadaSW());
-        criaPoligonos(mapa, mapa.getPoligonos().get(0).getCoordenadaSE());
+        poligono = criaPoligonos(mapa, poligono);
 
         // 3º passo: criar DFS
         // 4º passo: criar logica de entcontrar a maior area
     }
 
-    public static void criaPoligonos(Mapa mapa, Coordenada coordenadaNW) {
-        Coordenada auxX = new Coordenada(mapa.getW(), mapa.getH());
-        Coordenada auxY = new Coordenada(mapa.getW(), mapa.getH());
-        // 1- LINHA X - PROCURAR MENOR X MAIOR QUE BX, exemplo 3,9 que é o M
-        // 1 - LINHA Y - PROCURAR MENOR Y MAIOR QUE BY, exemplo 10,2 que é o P
-        for (Mina mina : mapa.getMinas()) {
-            Coordenada coordenada = mina.getCoordenada();
-            if (coordenada.getX() > coordenadaNW.getX() &&
-                    coordenada.getX() < auxX.getX()) {
-                auxX = coordenada;
-            }
-            if (coordenada.getY() > coordenadaNW.getY()
-                    && coordenada.getY() < auxY.getY()) {
-                auxY = coordenada;
-            }
-        }
-        // 2 - LINHA X - PROCURAR MENOR X MAIOR QUE MX, que é 3, exemplo 5,4 que é o N
-        // 2 - LINHA Y - PROCURAR MENOR Y MAIOR QUE PY, que é 2, exemplo 5,4 que é o N
-
-        Coordenada aux2X = new Coordenada(mapa.getW(), mapa.getH());
-        Coordenada aux2Y = new Coordenada(mapa.getW(), mapa.getH());
-        for (Mina mina : mapa.getMinas()) {
-            Coordenada coordenada = mina.getCoordenada();
-            if (coordenada.getX() >= auxX.getX() &&
-                    coordenada.getX() < aux2X.getX()) {
-                aux2X = coordenada;
-            }
-            if (coordenada.getY() >= auxY.getY()
-                    && coordenada.getY() < aux2Y.getY()) {
-                aux2Y = coordenada;
-            }
-        }
-
-        Coordenada coordenadaNE = new Coordenada(auxY.getX(), coordenadaNW.getY());
-        Coordenada coordenadaSW = new Coordenada(coordenadaNW.getX(), auxX.getY());
-        Coordenada coordenadaSE = new Coordenada(auxY.getX(), auxX.getY());
+    public static Poligono criaPoligonos(Mapa mapa, Poligono poligonoAnterior) {
         Poligono poligono = new Poligono(
+                poligonoAnterior.getCoordenadaNW(),
+                poligonoAnterior.getCoordenadaNE(),
+                poligonoAnterior.getCoordenadaSW(),
+                poligonoAnterior.getCoordenadaSE()
+        );
+
+        localizarCoordenadaNW(mapa, poligono, poligonoAnterior);  // coordenada NW do poligono anterior até que termine as possibilidades
+
+        localizarCoordenadaNE(mapa, poligono, poligonoAnterior);
+        
+        
+        Coordenada coordenadaSW = localizarCoordenadaSW(mapa, poligono);
+
+        Coordenada coordenadaSE = new Coordenada(coordenadaNE.getX(), coordenadaSW.getY());
+
+
+        poligono = new Poligono(
                 coordenadaNW,
                 coordenadaNE,
                 coordenadaSW,
                 coordenadaSE);
         mapa.getPoligonos().add(poligono);
+        System.out.println("Poligono criado: NW(" + poligono.getCoordenadaNW().getX() + "," + poligono.getCoordenadaNW().getY() + ") " +
+                "NE(" + poligono.getCoordenadaNE().getX() + "," + poligono.getCoordenadaNE().getY() + ") " +
+                "SW(" + poligono.getCoordenadaSW().getX() + "," + poligono.getCoordenadaSW().getY() + ") " +
+                "SE(" + poligono.getCoordenadaSE().getX() + "," + poligono.getCoordenadaSE().getY() + ")"
+        );
+        return poligono;
 
     }
+    public static void localizarCoordenadaNW(Mapa mapa, Poligono poligono, Poligono poligonoAnterior) {
+        poligono.setCoordenadaNW(new Coordenada(poligonoAnterior.getCoordenadaNW().getX(), poligonoAnterior.getCoordenadaNW().getY())); // funciona para caso 1
+    }
 
+    public static void localizarCoordenadaNE(Mapa mapa, Poligono poligono, Poligono poligonoAnterior) {
+        Coordenada coordenadaSE = poligonoAnterior.getCoordenadaSE();
+        Coordenada coordenadaNE = poligonoAnterior.getCoordenadaNE();   
+        for (Mina mina : mapa.getMinas()) {
+            Coordenada coordenadaMina = mina.getCoordenada();
+            if (coordenadaNE.getX() < coordenadaMina.getX() &&
+             coordenadaSE.getX() > coordenadaMina.getX() &&
+             coordenadaNE.getY() == coordenadaMina.getY()
+            ) {
+                coordenadaNE = coordenadaMina;
+            }
+        }
+        poligonoAnterior.setColisaoX(coordenadaNE);
+        return coordenadaNE;
+    }
+
+    public static Coordenada localizarCoordenadaSW(Mapa mapa, Poligono poligonoAnterior) {
+        Coordenada coordenadaNW = poligonoAnterior.getCoordenadaNW();
+        Coordenada coordenadaSW = poligonoAnterior.getCoordenadaSW();
+        Coordenada coordenadaNE = poligonoAnterior.getCoordenadaNE();
+
+        for (Mina mina : mapa.getMinas()) {
+            Coordenada coordenadaMina = mina.getCoordenada();
+            if (coordenadaNW.getY() < coordenadaMina.getY() &&
+             coordenadaSW.getY() > coordenadaMina.getY() &&
+             coordenadaNW.getX() < coordenadaMina.getX() &&
+                coordenadaNE.getX() > coordenadaMina.getX()
+            ) {
+                coordenadaSW = coordenadaMina;
+            }
+        }
+        poligonoAnterior
+        coordenadaSW = new Coordenada(coordenadaNW.getX(), coordenadaSW.getY());
+        return coordenadaSW;
+    }
 }
