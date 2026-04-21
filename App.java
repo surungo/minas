@@ -44,6 +44,15 @@ public class App {
             mapa.getMinas().add(mina);
         }
 
+        // IDEIA PRA FAZER O V3 V4 DANE-SE
+        //
+        // AO INVES DE VER TODAS AS LINHAS DO MAPA
+        // VER AS LINHAS ONDE AS BOMBAS ESTAO
+        // E A PARTIR DISSO CRIAR OS POLIGONOS!!!!!!!!!
+
+
+
+
         for (Mina mina : mapa.getMinas()) {
             Poligono poligonoNorte = criarPoligonoNorte(mina, mapa);
             Poligono poligonoSul = criarPoligonoSul(mina, mapa);
