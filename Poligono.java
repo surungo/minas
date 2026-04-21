@@ -77,5 +77,12 @@ public class Poligono {
         this.colisaoInferior = colisaoInferior;
     }
 
+    @Override
+    public String toString() {
+        return "Poligono [coordenadaNW=" + coordenadaNW + ", coordenadaNE=" + coordenadaNE + ", coordenadaSW="
+                + coordenadaSW + ", coordenadaSE=" + coordenadaSE + ", colisaoDireita=" + colisaoDireita
+                + ", colisaoInferior=" + colisaoInferior + "]";
+    }
+
     
 }

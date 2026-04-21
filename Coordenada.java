@@ -16,4 +16,9 @@ public class Coordenada {
         return y;
     }
 
+    @Override
+    public String toString() {
+        return "[x=" + String.format("%4s", x) + ", y=" + String.format("%4s", y) + "]";
+    }
+    
 }

@@ -1,1 +1,1 @@
-        return coordenadaNE;
+criarPoligonoNorte

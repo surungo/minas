@@ -14,6 +14,7 @@ public class Mapa {
         this.poligonos = new ArrayList<>();
         this.minas = new ArrayList<>();
     }
+
     public ArrayList<Poligono> getPoligonos() {
         return poligonos;
     }
@@ -54,5 +55,15 @@ public class Mapa {
         this.m = m;
     }
 
-    
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Mapa: ").append(w).append("x").append(h).append(", Minas: ").append(m).append("\n");
+        sb.append("Poligonos:\n");
+        for (Poligono poligono : poligonos) {
+            sb.append(poligono.toString()).append("\n");
+        }
+        return sb.toString();
+
+    }
+
 }
