@@ -3,8 +3,8 @@ public class Poligono {
     private Coordenada coordenadaNE;
     private Coordenada coordenadaSW;
     private Coordenada coordenadaSE;
-    private Coordenada colisaoX;
-    private Coordenada colisaoY;
+    private Coordenada colisaoDireita;
+    private Coordenada colisaoInferior;
 
     public Poligono(Coordenada coordenadaNW, Coordenada coordenadaNE, Coordenada coordenadaSW, Coordenada coordenadaSE) {
         this.coordenadaNW = coordenadaNW;
@@ -61,20 +61,21 @@ public class Poligono {
         this.coordenadaSE = coordenadaSE;
     }
 
-    public Coordenada getColisaoX() {
-        return colisaoX;
+    public Coordenada getColisaoDireita() {
+        return colisaoDireita;
     }
 
-    public void setColisaoX(Coordenada colisaoX) {
-        this.colisaoX = colisaoX;
+    public void setColisaoDireita(Coordenada colisaoDireita) {
+        this.colisaoDireita = colisaoDireita;
     }
 
-    public Coordenada getColisaoY() {
-        return colisaoY;
+    public Coordenada getColisaoInferior() {
+        return colisaoInferior;
     }
 
-    public void setColisaoY(Coordenada colisaoY) {
-        this.colisaoY = colisaoY;
+    public void setColisaoInferior(Coordenada colisaoInferior) {
+        this.colisaoInferior = colisaoInferior;
     }
 
+    
 }
