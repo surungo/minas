@@ -43,30 +43,73 @@ public class App {
             Mina mina = new Mina(coordenada);
             mapa.getMinas().add(mina);
         }
-        System.out.println(new java.util.Date().toString());
-        mapa.setW(100);
-        mapa.setH(77);
 
-        for(int i = 0; i < mapa.getW(); i++) {
-            for(int j = 0; j < mapa.getH(); j++) {
-                for(int k = 0; k < mapa.getW(); k++) {
-                    for(int l = 0; l < mapa.getH(); l++) {
-                        try{                
-                            Coordenada coordenadaNW = new Coordenada(i, j);
-                            Coordenada coordenadaNE = new Coordenada(k, j);
-                            Coordenada coordenadaSW = new Coordenada(i, l);
-                            Coordenada coordenadaSE = new Coordenada(k, l);    
-                            Poligono poligono = new Poligono(coordenadaNW, coordenadaNE, coordenadaSW, coordenadaSE);
-                            mapa.getPoligonos().add(poligono);
-                        } catch (Exception e) {
-                            System.err.println("Erro ao criar poligono: "+ i+","+j+","+k+","+l+" - " + e.getMessage());
-                        }
-                    }
-                }
+        for (Mina mina : mapa.getMinas()) {
+            Poligono poligonoNorte = criarPoligonoNorte(mina, mapa);
+            Poligono poligonoSul = criarPoligonoSul(mina, mapa);
+            Poligono poligonoLeste = criarPoligonoLeste(mina, mapa);
+            Poligono poligonoOeste = criarPoligonoOeste(mina, mapa);
+        }
+
+
+    }
+    
+    public static Poligono criarPoligonoNorte(Mina mina, Mapa mapa) {
+        Mina colisaoEsquerda = new Mina(new Coordenada(0,0));
+        Mina colisaoSuperior = new Mina(new Coordenada(0,0));
+        for (Mina mina2 : mapa.getMinas()) {
+            if(mina2.getCoordenada().getX() < mina.getCoordenada().getX()
+            && mina2.getCoordenada().getY() < mina.getCoordenada().getY()
+
+            && colisaoEsquerda.getCoordenada().getX() < mina2.getCoordenada().getX()
+
+            ) {
+                colisaoEsquerda.setMina(mina2);
             }
         }
-        System.out.println(new java.util.Date().toString());
-        
+        for (Mina mina2 : mapa.getMinas()) {
+            if(mina2.getCoordenada().getY() < mina.getCoordenada(). getY()
+            ){
+                colisaoSuperior.setMina(mina2);
+            }
+        }
 
+       
+
+        Coordenada coordenadaNW = new Coordenada(mina.getCoordenada().getX() + 1, mina.getCoordenada().getY() - 1);
+
+        Coordenada coordenadaNE = new Coordenada(mina.getCoordenada().getX() + 1, mina.getCoordenada().getY() - 1);
+        Coordenada coordenadaSW = new Coordenada(mina.getCoordenada().getX() - 1, mina.getCoordenada().getY());
+        Coordenada coordenadaSE = new Coordenada(mina.getCoordenada().getX() + 1, mina.getCoordenada().getY());
+        Poligono poligonoNorte = new Poligono(coordenadaNW, coordenadaNE, coordenadaSW, coordenadaSE);
+        return poligonoNorte;
+       
+    }
+
+    public static Poligono criarPoligonoSul(Mina mina, Mapa mapa) {
+        Coordenada coordenadaNW = new Coordenada(mina.getCoordenada().getX() - 1, mina.getCoordenada().getY());
+        Coordenada coordenadaNE = new Coordenada(mina.getCoordenada().getX() + 1, mina.getCoordenada().getY());
+        Coordenada coordenadaSW = new Coordenada(mina.getCoordenada().getX() - 1, mina.getCoordenada().getY() + 1);
+        Coordenada coordenadaSE = new Coordenada(mina.getCoordenada().getX() + 1, mina.getCoordenada().getY() + 1);
+        Poligono poligonoSul = new Poligono(coordenadaNW, coordenadaNE, coordenadaSW, coordenadaSE);
+        return poligonoSul;
+    }
+
+    public static Poligono criarPoligonoLeste(Mina mina, Mapa mapa) {
+        Coordenada coordenadaNW = new Coordenada(mina.getCoordenada().getX(), mina.getCoordenada().getY() - 1);
+        Coordenada coordenadaNE = new Coordenada(mina.getCoordenada().getX() + 1, mina.getCoordenada().getY() - 1);
+        Coordenada coordenadaSW = new Coordenada(mina.getCoordenada().getX(), mina.getCoordenada().getY() + 1);
+        Coordenada coordenadaSE = new Coordenada(mina.getCoordenada().getX() + 1, mina.getCoordenada().getY() + 1);
+        Poligono poligonoLeste = new Poligono(coordenadaNW, coordenadaNE, coordenadaSW, coordenadaSE);
+        return poligonoLeste;
+    }
+
+    public static Poligono criarPoligonoOeste(Mina mina, Mapa mapa) {
+        Coordenada coordenadaNW = new Coordenada(mina.getCoordenada().getX() - 1, mina.getCoordenada().getY() - 1);
+        Coordenada coordenadaNE = new Coordenada(mina.getCoordenada().getX(), mina.getCoordenada().getY() - 1);
+        Coordenada coordenadaSW = new Coordenada(mina.getCoordenada().getX() - 1, mina.getCoordenada().getY() + 1);
+        Coordenada coordenadaSE = new Coordenada(mina.getCoordenada().getX(), mina.getCoordenada().getY() + 1);
+        Poligono poligonoOeste = new Poligono(coordenadaNW, coordenadaNE, coordenadaSW, coordenadaSE);
+        return poligonoOeste;
     }
 }
