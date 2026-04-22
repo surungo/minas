@@ -84,5 +84,8 @@ public class Poligono {
                 + ", colisaoInferior=" + colisaoInferior + "]";
     }
 
+    public int getArea(){
+        return (coordenadaNE.getX()-coordenadaNW.getX())*(coordenadaSW.getY()-coordenadaNW.getY());
+    }
     
 }
