@@ -3,16 +3,18 @@ import java.util.ArrayList;
 public class Mapa {
     private int w;
     private int h;
-    private int m;
+    private int qtaMina;
     private ArrayList<Mina> minas;
+    private ArrayList<Coordenada> cantos;
     private ArrayList<Poligono> poligonos;
 
-    public Mapa(int w, int h, int m) {
+    public Mapa(int w, int h, int qtaMina) {
         this.w = w;
         this.h = h;
-        this.m = m;
+        this.qtaMina = qtaMina;
         this.poligonos = new ArrayList<>();
         this.minas = new ArrayList<>();
+        this.cantos = new ArrayList<>();
     }
 
     public ArrayList<Poligono> getPoligonos() {
@@ -47,12 +49,20 @@ public class Mapa {
         this.h = h;
     }
 
-    public int getM() {
-        return m;
+    public int getQtaMina() {
+        return qtaMina;
     }
 
-    public void setM(int m) {
-        this.m = m;
+    public void setQtaMina(int qtaMina) {
+        this.qtaMina = qtaMina;
+    }
+
+    public ArrayList<Coordenada> getCantos() {
+        return cantos;
+    }
+
+    public void setCantos(ArrayList<Coordenada> cantos) {
+        this.cantos = cantos;
     }
 
     public String toString() {

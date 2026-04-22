@@ -33,7 +33,7 @@ public class App {
 
         mapa.setW(Integer.parseInt(linhas.get(0).split(" ")[0]));
         mapa.setH(Integer.parseInt(linhas.get(0).split(" ")[1]));
-        mapa.setM(Integer.parseInt(linhas.get(0).split(" ")[2]));
+        mapa.setQtaMina(Integer.parseInt(linhas.get(0).split(" ")[2]));
 
         for (int i = 1; i < linhas.size(); i++) {
             Coordenada coordenada = new Coordenada(Integer.parseInt(linhas.get(i).split(" ")[0]),
@@ -42,19 +42,18 @@ public class App {
             mapa.getMinas().add(mina);
         }
 
-        ArrayList<Coordenada> cantos = new ArrayList<>();
-        cantos.add(new Coordenada(0, 0));
-        cantos.add(new Coordenada(0, mapa.getW()));
-        cantos.add(new Coordenada(mapa.getH(), 0));
-        cantos.add(new Coordenada(mapa.getH(), mapa.getW()));
+        mapa.getCantos().add(new Coordenada(0, 0));
+        mapa.getCantos().add(new Coordenada(0, mapa.getW()));
+        mapa.getCantos().add(new Coordenada(mapa.getH(), 0));
+        mapa.getCantos().add(new Coordenada(mapa.getH(), mapa.getW()));
         for (Mina mina : mapa.getMinas()) {
-            cantos.add(new Coordenada(0 , mina.getCoordenada().getY()));            
-            cantos.add(new Coordenada(mina.getCoordenada().getX(), 0));
-            cantos.add(new Coordenada(mapa.getH(), mina.getCoordenada().getY()));            
-            cantos.add(new Coordenada(mina.getCoordenada().getX(), mapa.getW()));
+            mapa.getCantos().add(new Coordenada(0 , mina.getCoordenada().getY()));            
+            mapa.getCantos().add(new Coordenada(mina.getCoordenada().getX(), 0));
+            mapa.getCantos().add(new Coordenada(mapa.getH(), mina.getCoordenada().getY()));            
+            mapa.getCantos().add(new Coordenada(mina.getCoordenada().getX(), mapa.getW()));
             for (Mina mina2 : mapa.getMinas()){
-                cantos.add(new Coordenada(mina.getCoordenada().getX(),mina2.getCoordenada().getY()));
-                cantos.add(new Coordenada(mina2.getCoordenada().getX(),mina.getCoordenada().getY()));
+                mapa.getCantos().add(new Coordenada(mina.getCoordenada().getX(),mina2.getCoordenada().getY()));
+                mapa.getCantos().add(new Coordenada(mina2.getCoordenada().getX(),mina.getCoordenada().getY()));
             }
         }
         int teste = 0;
