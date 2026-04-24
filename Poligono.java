@@ -77,6 +77,10 @@ public class Poligono {
         this.colisaoInferior = colisaoInferior;
     }
 
+    public int getArea(){
+        return (coordenadaNE.getX()-coordenadaNW.getX())*(coordenadaSW.getY()-coordenadaNW.getY());
+    }
+
     @Override
     public String toString() {
         return "Poligono [coordenadaNW=" + coordenadaNW + ", coordenadaNE=" + coordenadaNE + ", coordenadaSW="
@@ -84,5 +88,6 @@ public class Poligono {
                 + ", colisaoInferior=" + colisaoInferior + "]";
     }
 
+    
     
 }

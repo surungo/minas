@@ -1,1 +1,1 @@
-criarPoligonoNorte
+ mapa.getCantos().add(new Coordenada(mapa.getH(), 0));

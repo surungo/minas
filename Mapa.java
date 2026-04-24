@@ -1,18 +1,21 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Mapa {
     private int w;
     private int h;
-    private int m;
+    private int qtaMina;
     private ArrayList<Mina> minas;
+    private HashMap<String, Coordenada> cantos;
     private ArrayList<Poligono> poligonos;
 
-    public Mapa(int w, int h, int m) {
+    public Mapa(int w, int h, int qtaMina) {
         this.w = w;
         this.h = h;
-        this.m = m;
+        this.qtaMina = qtaMina;
         this.poligonos = new ArrayList<>();
         this.minas = new ArrayList<>();
+        this.cantos = new HashMap<>();
     }
 
     public ArrayList<Poligono> getPoligonos() {
@@ -47,20 +50,38 @@ public class Mapa {
         this.h = h;
     }
 
-    public int getM() {
-        return m;
+    public int getQtaMina() {
+        return qtaMina;
     }
 
-    public void setM(int m) {
-        this.m = m;
+    public void setQtaMina(int qtaMina) {
+        this.qtaMina = qtaMina;
+    }
+
+    public HashMap<String, Coordenada> getCantos() {
+        return cantos;
+    }
+
+    public void setCantos(HashMap<String, Coordenada> cantos) {
+        this.cantos = cantos;
     }
 
     public String toString() {
+        return toString(false);
+    }
+
+    public String toString(boolean full) {
         StringBuilder sb = new StringBuilder();
-        sb.append("Mapa: ").append(w).append("x").append(h).append(", Minas: ").append(m).append("\n");
+        sb.append("Mapa: ").append(w).append("x").append(h).append(", Minas: ").append(qtaMina).append("\n");
         sb.append("Poligonos:\n");
         for (Poligono poligono : poligonos) {
             sb.append(poligono.toString()).append("\n");
+        }
+        if (full) {
+            sb.append("Cantos:\n");
+            for (Coordenada canto : cantos.values()) {
+                sb.append(canto.toString()).append("\n");
+            }
         }
         return sb.toString();
 
